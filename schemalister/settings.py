@@ -59,7 +59,14 @@ WSGI_APPLICATION = 'schemalister.wsgi.application'
 import dj_database_url
 
 DATABASES = {
-    'default': dj_database_url.config()
+    'default': {
+        'ENGINE': os.environ.get('DB_ENGINE', 'django.db.backends.postgresql_psycopg2'),
+        'NAME': os.environ.get('DB_NAME', 'schemabuilder'),
+        'USER': os.environ.get('DB_USER', 'postgres'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'password'),
+        'HOST': os.environ.get('DB_HOST', 'db'),
+        'PORT': os.environ.get('DB_PORT', '5432'),
+    }
 }
 
 # Celery settings
@@ -68,8 +75,8 @@ BROKER_POOL_LIMIT = 1
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
 
-LANGUAGE_CODE = 'en-gb'
-TIME_ZONE = 'UTC'
+LANGUAGE_CODE = os.environ.get('LANG', 'en-us')
+TIME_ZONE = os.environ.get('TIME_ZONE', 'UTC')
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
@@ -90,12 +97,10 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 SALESFORCE_CONSUMER_KEY = os.environ['SALESFORCE_CONSUMER_KEY']
 SALESFORCE_CONSUMER_SECRET = os.environ['SALESFORCE_CONSUMER_SECRET']
-SALESFORCE_REDIRECT_URI = 'https://schemalister.herokuapp.com/oauth_response'
+SALESFORCE_REDIRECT_URI = os.environ['PUBLIC_URL'] + '/oauth_response'
 SALESFORCE_API_VERSION = int(os.environ['SALESFORCE_API_VERSION'])
 
-# A sample logging configuration. The only tangible logging
-# performed by this configuration is to send an email to
-# the site admins on every HTTP 500 error when DEBUG=False.
+# A sample logging configuration.
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
 LOGGING = {
@@ -107,10 +112,8 @@ LOGGING = {
         }
     },
     'handlers': {
-        'mail_admins': {
-            'level': 'ERROR',
-            'filters': ['require_debug_false'],
-            'class': 'django.utils.log.AdminEmailHandler'
+        'console': {
+            'class': 'logging.StreamHandler',
         },
         'file': {
             'level': 'DEBUG',
@@ -120,8 +123,8 @@ LOGGING = {
     },
     'loggers': {
         'django.request': {
-            'handlers': ['mail_admins', 'file'],
-            'level': 'ERROR',
+            'handlers': ['file', 'console'],
+            'level': 'INFO',
             'propagate': True,
         },
     }

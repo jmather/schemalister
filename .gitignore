@@ -1,0 +1,9 @@
+.env
+bin/
+.Python
+debug.log
+include/
+lib/
+celerybeat-schedule.db
+pip-selfcheck.json
+**/*.pyc
