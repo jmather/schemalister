@@ -29,5 +29,4 @@ Copy `.env.template` to `.env`.
 ## Using with Docker (First Time)
 
 1. Run: `docker-compose up -d`
-2. Run `docker compose run web /env/bin/python /app/manage.py syncdb` to set up the database structure.
-3. Then go to: http://localhost:8000 and use it!
+2. Then go to: http://localhost:8000 and use it!

@@ -25,6 +25,7 @@ class Object(models.Model):
 	schema = models.ForeignKey(Schema)
 	label = models.CharField(max_length=255)
 	api_name = models.CharField(max_length=255)
+	raw_value = models.TextField()
 
 	def sorted_fields(self):
 		return self.field_set.order_by('label')
@@ -39,6 +40,7 @@ class Field(models.Model):
 	help_text = models.TextField(blank=True, null=True)
 	formula = models.TextField(blank=True, null=True)
 	attributes = models.CharField(max_length=255, blank=True)
+	raw_value = models.TextField()
 
 	field_usage_display = models.TextField(blank=True, null=True)
 	field_usage_display_text = models.TextField(blank=True, null=True)

@@ -1,9 +1,14 @@
+# dev files
+.DS_Store
 .env
-bin/
-.Python
-debug.log
-include/
-lib/
-celerybeat-schedule.db
-pip-selfcheck.json
+.env.local
+.idea/
+converter/node_modules
+converter/ref_docs
+pg_data/
+
+# for running locally
+celerybeat-schedule
+venv/
 **/*.pyc
+debug.log
