@@ -135,7 +135,7 @@ def get_objects_and_fields(schema):
 					new_object.schema = schema
 					new_object.api_name = sObject['name']
 					new_object.label = sObject['label']
-					new_object.raw_value = sObject.string()
+					new_object.raw_value = json.dumps(sObject)
 					new_object.save()
 
 					# query for fields in the object
@@ -156,7 +156,7 @@ def get_objects_and_fields(schema):
 						new_field.object = new_object
 						new_field.api_name = field_name
 						new_field.label = field['label']
-						new_field.raw_value = field.string()
+						new_field.raw_value = json.dumps(field)
 
 						if 'inlineHelpText' in field:
 							new_field.help_text = field['inlineHelpText']
